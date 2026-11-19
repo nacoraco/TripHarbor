@@ -17,7 +17,9 @@ TripHarbor je spletna aplikacija za odkrivanje, načrtovanje in organizacijo sku
 
 [![CI/CD](https://github.com/nacoraco/TripHarbor/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/nacoraco/TripHarbor/actions/workflows/ci-cd.yml)
 
-Javna aplikacija: _povezava bo dodana po produkcijski namestitvi._
+- **Javna aplikacija:** https://nacoraco.github.io/TripHarbor/
+- **Backend API:** https://tripharbor-api.onrender.com/api/health
+- **Produkcijska baza:** Render Postgres (free)
 
 Cevovod GitHub Actions se zažene ob pull requestu in ob pushu na `main`. Jobi `lint`, `build` in `test` preverijo kakovost kode, zgradijo frontend/backend ter zaženejo teste s poročilom o pokritosti. Job `deploy` se izvede samo ob pushu na `main`, ko uspejo vsi prejšnji jobi, in uporabi artefakte gradnje za GitHub Pages ter produkcijsko sliko backenda.
 
