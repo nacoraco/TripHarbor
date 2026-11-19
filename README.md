@@ -10,8 +10,16 @@ TripHarbor je spletna aplikacija za odkrivanje, načrtovanje in organizacijo sku
 - **ORM:** Prisma ORM, Prisma Migrate
 - **Avtentikacija:** JWT, bcrypt
 - **Validacija podatkov:** Zod
-- **Zemljevid:** MapLibre GL JS, OpenFreeMap, Nominatim
+- **Zemljevid:** MapLibre GL JS, OpenFreeMap, Geoapify
 - **Razvojna orodja:** Docker Compose, Git, GitHub
+
+## Status in namestitev
+
+[![CI/CD](https://github.com/nacoraco/TripHarbor/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/nacoraco/TripHarbor/actions/workflows/ci-cd.yml)
+
+Javna aplikacija: _povezava bo dodana po produkcijski namestitvi._
+
+Cevovod GitHub Actions se zažene ob pull requestu in ob pushu na `main`. Jobi `lint`, `build` in `test` preverijo kakovost kode, zgradijo frontend/backend ter zaženejo teste s poročilom o pokritosti. Job `deploy` se izvede samo ob pushu na `main`, ko uspejo vsi prejšnji jobi, in uporabi artefakte gradnje za GitHub Pages ter produkcijsko sliko backenda.
 
 ## Lokalni zagon
 
@@ -26,7 +34,7 @@ Za lokalni zagon aplikacije potrebujete:
 ### 1. Kloniranje repozitorija
 
 ```bash
-git clone https://github.com/valentinaj24/TripHarbor.git
+git clone https://github.com/nacoraco/TripHarbor.git
 cd TripHarbor
 ```
 
@@ -52,6 +60,7 @@ PORT=3000
 FRONTEND_URL=http://localhost:5173
 DATABASE_URL="postgresql://tripharbor_user:YOUR_PASSWORD@localhost:5432/tripharbor?schema=public"
 JWT_SECRET=replace_with_a_secure_random_secret
+GEOAPIFY_API_KEY=
 ```
 
 Vrednost `YOUR_PASSWORD` zamenjajte z geslom uporabnika PostgreSQL, `JWT_SECRET` pa z varno naključno vrednostjo.
@@ -83,7 +92,7 @@ npm run dev
 
 Frontend je dostopen na naslovu `http://localhost:5173`.
 
-Backend in frontend morata med uporabo aplikacije delovati sočasno.
+Backend in frontend morata med uporabo aplikacije delovati sočasno. Za iskanje destinacij nastavite `VITE_GEOAPIFY_API_KEY` v `frontend/.env`, za backend pa `GEOAPIFY_API_KEY` v `backend/.env`. Brez ključa osnovni pregled izletov deluje, iskanje novih destinacij pa ne.
 
 ### 5. Administratorski račun
 
@@ -99,6 +108,20 @@ ADMIN_PASSWORD="replace-with-a-secure-password"
 Administratorsko geslo mora vsebovati najmanj 12 znakov. Skripta ustvari račun z vlogo `ADMIN` in geslo varno shrani z uporabo bcrypt.
 
 Skripto za ustvarjanje administratorskega računa zaženite po uspešni nastavitvi podatkovne baze in izvedbi migracij.
+
+### 6. Testi in preverjanje kakovosti
+
+```bash
+cd backend
+npm run lint
+npm test
+npm run test:coverage
+
+cd ../frontend
+npm run lint
+npm test
+npm run test:coverage
+```
 
 
 ## Dokumentacija
